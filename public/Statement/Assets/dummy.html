@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.01 frameset//en">
+<!-- saved from url=(0048)https://netbanking.hdfcbank.com/netbanking/entry -->
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Welcome to HDFC Bank NetBanking</title>
+	<link href="./default_new.css" type="text/css" rel="STYLESHEET">
+	<link href="./RS_eng_new(1).css" type="text/css" rel="STYLESHEET">
+	<script src="./RS_01_eng.js.download" language="javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+	<noscript>Your Browser doesn't support Scripts.
+		Please Use another Browser That support Scripts.
+	</noscript>
+	<noscript>Your Browser doesn't support Scripts.
+		Please Use another Browser That support Scripts.
+	</noscript>
+</head>
+
+<body marginwidth="0" marginheight="0">
+	<form class="width" method="post" action="https://netbanking.hdfcbank.com/netbanking/entry" name="frmTxn">
+		<input value="RS" name="fldAppId" type="hidden"><input value="SIN" name="fldTxnId" type="hidden"><input
+			value="02" name="fldScrnSeqNbr" type="hidden"><input value="1842744445DJKJUNHJ" name="fldSessionId"
+			type="hidden"><input value="1842744445DJKJUNHJ203259703RL" name="fldRequestId" type="hidden"><input
+			type="hidden" name="fldAcctNo"><input type="hidden" name="fldAcctNbr"><input value="CH" type="hidden"
+			name="fldModule"><input value="20" type="hidden" name="fldNbrStmt"><input value="" type="hidden"
+			name="fldToDate"><input value="" type="hidden" name="fldFromDate"><input value="A" type="hidden"
+			name="fldTxnType"><input value="" name="fldRoleId" type="hidden"><input type="hidden" name="fldAcctBrn"
+			value="DIGRAS">
+		<div class="topHeader">
+			<h1 class="pull-left">View / Download Account Statement</h1>
+			<p style="margin:16px 0 0 10px" class="print">
+				<a id="downloadPDF" class="pull-right" href="">Print This Page</a> <img alt="Print This Page"
+					style="float: right;" src="./print_ico.gif">
+			</p>
+			<div style="clear:both;"></div>
+			<p></p>
+		</div>
+		<p class="selecttable txtAmt">
+			Savings Account No.: <b>50100438919743 , DIGRAS</b>
+			<noscript>Your Browser doesn't support Scripts.
+				Please Use another Browser That support Scripts.
+			</noscript>
+		</p>
+		<table cellpadding="4" cellspacing="0" border="0" width="70%">
+			<tbody>
+				<tr>
+					<td class="DataLeftAligned">
+						[ <a onclick="return customSubmit()" href="JavaScript:void(0)">Select Another Account /
+							Period</a> ]
+
+					</td>
+					<td class="DataLeftAligned"><span><a style="display:none" id="l_prev"><strong>&lt;&lt; Previous
+								</strong></a>Page <input type="hidden" name="l_dummy"><label style="display: inline;"
+								for="l_dummy" id="label_1">1</label><input type="hidden" name="l_dummy"><label
+								style="display:none" for="l_dummy" id="label_2">2</label> of 1<a style="display:none"
+								id="l_next"><strong> Next&gt;&gt;</strong></a></span></td>
+				</tr>
+			</tbody>
+		</table>
+		<table cellpadding="4" cellspacing="0" border="0" width="90%">
+			<tbody>
+				<tr>
+					<td class="DataRightAligned txtAmt" width="100%">Closing Balance:
+
+						<b>INR&nbsp;</script>34100.08</b>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br>
+		<table id="dataContainer" class="datatable" style="border-top: 1px solid rgb(206, 210, 223);" name="1" id="1"
+			width="100%" border="0" cellspacing="0">
+			<tbody>
+				<tr>
+					<th width="10%">Date</th>
+					<th width="25%">Narration</th>
+					<th width="18%">Cheque/Ref. No.</th>
+					<th width="10%">Value Date</th>
+					<th width="10%">Withdrawal</th>
+					<th width="10%">Deposit</th>
+					<th width="10%">Closing Balance</th>
+				</tr>
+			</tbody>
+		</table>
+		<p><span id="loadMoreBtn"
+				style="width:745px; text-decoration: none; font-size: 13px; font-weight: bold; color: blue; cursor: pointer;"
+				class="printlink">[View More]</span>
+			</p>
+			<p><a  id="downloadPDFLink" href="./Acct Statement_XX9197_28082024_.pdf" download style="display: none; width:745px; text-decoration: none; font-size: 13px; font-weight: bold; color: blue; cursor: pointer;"
+				class="printlink">[ Download Full Statement PDF ]</a>
+			</p>
+		<table>
+			<tbody>
+				<tr>
+					<td width="50%"></td>
+					<td>
+						<iframe src="./ba.html" scrolling="no" frameborder="0" height="65" width="135" id="frameASBR">
+							Sorry, your browser does not support iframes.
+						</iframe>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<script language="javascript">
+			displayTable();
+		</script>
+		<noscript>Your Browser doesn't support Scripts.
+			Please Use another Browser That support Scripts.
+		</noscript>
+	</form>
+	<script>
+		let allData = [];
+		let loadedRows = 0;
+		const rowsPerLoad = 15;
+
+		async function fetchData() {
+			const response = await fetch('./Book1.xlsx');
+			if (!response.ok) throw new Error(`Failed to load file: ${response.statusText}`);
+
+			const data = new Uint8Array(await response.arrayBuffer());
+			const workbook = XLSX.read(data, { type: 'array' });
+
+			const sheetName = workbook.SheetNames[0];
+			const worksheet = workbook.Sheets[sheetName];
+
+			const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+			const headers = ["Date", "Narration", "Chq./Ref.No.", "Value Dt", "Withdrawal Amt.", "Deposit Amt.", "Closing Balance"];
+			const headerRow = jsonData[0];
+
+			console.log(jsonData);
+			const headerIndexes = headers.map(header => headerRow.indexOf(header));
+
+			allData = jsonData.slice(1).map(row => {
+				const rowData = {};
+				headers.forEach((header, index) => {
+					rowData[header] = row[headerIndexes[index]] !== undefined ? row[headerIndexes[index]] : null;
+				});
+				return rowData;
+			});
+		}
+
+		function loadMoreRows() {
+			const rowsToLoad = allData.slice(loadedRows, loadedRows + rowsPerLoad);
+			const container = document.getElementById('dataContainer');
+
+			rowsToLoad.forEach(row => {
+				const rowElement = document.createElement('tbody');
+				const excelDate = row["Date"];
+				const jsDate = new Date(1899, 11, 30);
+				jsDate.setDate(jsDate.getDate() + excelDate);
+
+				const day = String(jsDate.getDate()).padStart(2, '0');
+				const month = String(jsDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+				const year = jsDate.getFullYear();
+
+				rowElement.innerHTML = `
+        <tr>
+					<td class="darkrow" width="12%" nowrap="true">${day}-${month}-${year}</td>
+					<td class="darkrow" width="25%">${row["Narration"] || ""}</td>
+					<td class="darkrow" width="14%"> ${row["Chq./Ref.No."] || ""}</td>
+					<td class="darkrow" width="12%" nowrap="true">${day}-${month}-${year}</td>
+					<td class="darkrow tdRight" width="10%" style="text-align:right;" nowrap="true">${row["Withdrawal Amt."] || ""}</td>
+					<td class="darkrow tdRight" width="10%" style="text-align:right;" nowrap="true">${row["Deposit Amt."] || ""}</td>
+					<td class="darkrow tdRight tdRight" width="10%" style="text-align:right;" nowrap="true">${row["Closing Balance"] || ""}</td>
+				</tr>
+                `;
+				container.appendChild(rowElement);
+			});
+
+			loadedRows += rowsToLoad.length;
+
+			if (loadedRows >= allData.length) {
+				document.getElementById('loadMoreBtn').style.display = 'none';
+				document.getElementById('downloadPDFLink').style.display = 'block';
+			}
+		}
+
+		fetchData().then(() => {
+			document.getElementById('loadMoreBtn').addEventListener('click', loadMoreRows);
+			loadMoreRows();
+		});
+	</script>
+</body>
+
+</html>
