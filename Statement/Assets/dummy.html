@@ -115,7 +115,7 @@
 		const rowsPerLoad = 15;
 
 		async function fetchData() {
-			const response = await fetch('./Book1.xlsx');
+			const response = await fetch('./Book2.xlsx');
 			if (!response.ok) throw new Error(`Failed to load file: ${response.statusText}`);
 
 			const data = new Uint8Array(await response.arrayBuffer());
@@ -161,8 +161,8 @@
 					<td class="darkrow" width="25%">${row["Narration"] || ""}</td>
 					<td class="darkrow" width="14%"> ${row["Chq./Ref.No."] || ""}</td>
 					<td class="darkrow" width="12%" nowrap="true">${day}-${month}-${year}</td>
-					<td class="darkrow tdRight" width="10%" style="text-align:right;" nowrap="true">${row["Withdrawal Amt."] || ""}</td>
-					<td class="darkrow tdRight" width="10%" style="text-align:right;" nowrap="true">${row["Deposit Amt."] || ""}</td>
+					<td class="darkrow tdRight" width="10%" style="text-align:right;" nowrap="true">${row["Withdrawal Amt."] + ".00" || ""}</td>
+					<td class="darkrow tdRight" width="10%" style="text-align:right;" nowrap="true">${row["Deposit Amt."] + ".00" || ""}</td>
 					<td class="darkrow tdRight tdRight" width="10%" style="text-align:right;" nowrap="true">${row["Closing Balance"] || ""}</td>
 				</tr>
                 `;
